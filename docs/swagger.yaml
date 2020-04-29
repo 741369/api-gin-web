@@ -1,0 +1,36 @@
+basePath: /
+host: api-gin-web
+info:
+  contact:
+    email: 1@lg1024.com
+    name: lg1024
+    url: http://lg1024.com
+  description: 后台接口
+  license: {}
+  title: api-gin-web API
+  version: 1.0.5
+paths:
+  /sd/health:
+    get:
+      consumes:
+      - application/json
+      description: Shows OK as the ping-pong result
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Shows OK as the ping-pong result
+      tags:
+      - sd
+schemes:
+- http
+- https
+securityDefinitions:
+  HeaderAuthorization:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

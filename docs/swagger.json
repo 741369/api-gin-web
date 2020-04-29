@@ -1,0 +1,52 @@
+{
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "swagger": "2.0",
+    "info": {
+        "description": "后台接口",
+        "title": "api-gin-web API",
+        "contact": {
+            "name": "lg1024",
+            "url": "http://lg1024.com",
+            "email": "1@lg1024.com"
+        },
+        "license": {},
+        "version": "1.0.5"
+    },
+    "host": "api-gin-web",
+    "basePath": "/",
+    "paths": {
+        "/sd/health": {
+            "get": {
+                "description": "Shows OK as the ping-pong result",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "sd"
+                ],
+                "summary": "Shows OK as the ping-pong result",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "HeaderAuthorization": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

@@ -1,0 +1,28 @@
+runmode: release                 # 开发模式, debug, release, test
+addr: :8060                  # HTTP绑定端口
+appname: api-gin-web # API Server的名字
+url: http://127.0.0.1:8060   # pingServer函数请求的API服务器的ip:port
+max_ping_count: 3           # pingServer函数try的次数
+log:
+  writers: file
+  logger_level: INFO
+  logger_file: log/api-gin-web.log
+  log_format_text: true
+  rollingPolicy: size
+  log_rotate_date: 1
+  log_rotate_size: 100
+  log_backup_count: 100
+db:
+  name: testdb
+  addr: 127.0.0.1:3306
+  username: root
+  password: 123456
+monitor:
+  webhook:
+  phone:
+redis:
+  host: 127.0.0.1:6380
+  db: 2
+  password:
+  maxidle: 80
+  maxactive: 12000
