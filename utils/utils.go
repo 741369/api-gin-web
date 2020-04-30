@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/base64"
 	"encoding/json"
+	"github.com/google/uuid"
 	"math/rand"
 	"regexp"
 	"strconv"
@@ -94,12 +95,21 @@ func GetSnowId() int64 {
 
 // 生成雪花 id
 func GetSnowIdString() string {
-	node, err := snowflake.NewNode(1)
+	node, err := snowflake.NewNode(99)
 	if err != nil {
 		log.Infof(nil, "generate snowflake id error, err = %s", err)
 		return "0"
 	}
 	return node.Generate().String()
+}
+
+// google uuid
+func GetUuidString() string {
+	return uuid.New().String()
+}
+
+func GetUuidInt64() uint32 {
+	return uuid.New().ID()
 }
 
 // 分页查询数据, return offset, limit

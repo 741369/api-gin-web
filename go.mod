@@ -8,6 +8,7 @@ require (
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/garyburd/redigo v1.6.0
 	github.com/gin-gonic/gin v1.6.2
+	github.com/google/uuid v1.1.1
 	github.com/jinzhu/gorm v1.9.12
 	github.com/prometheus/client_golang v1.5.1
 	github.com/spf13/pflag v1.0.5

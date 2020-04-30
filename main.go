@@ -29,7 +29,7 @@ import (
 // @name Authorization
 
 // @schemes http https
-// @host api-gin-web
+// @host http://127.0.0.1:8060
 // @BasePath /
 func main() {
 

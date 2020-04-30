@@ -25,8 +25,8 @@ type bodyLogWriter struct {
 
 func TraceId() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		traceId := utils.GetSnowIdString()
-		ctx.Set("xlvip-game-traceid", traceId)
+		traceId := utils.GetUuidString()
+		ctx.Set("X-Request-Id", traceId)
 	}
 }
 
