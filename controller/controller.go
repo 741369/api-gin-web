@@ -48,29 +48,3 @@ func SendResponse(context *gin.Context, err error, data interface{}) {
 		TraceId: traceId,
 	})
 }
-
-// SendResponseWky returns a copy of the current context that can be safely used outside the request's scope.
-// This has to be used when the context has to be passed to a goroutine.
-func SendResponseWky(context *gin.Context, err error, data interface{}) {
-	acceptLanguage := context.Request.Header.Get("Accept-Language")
-	language := utils.GetLanguage(acceptLanguage)
-	language = "zh"
-	code, message := errno.DecodeErr(err, language)
-
-	// always return http.StatusOK
-	context.JSON(http.StatusOK, ResponseWky{
-		Code:    code,
-		Message: message,
-		Data:    data,
-	})
-}
-
-// SendResponseAccount returns a copy of the current context that can be safely used outside the request's scope.
-// This has to be used when the context has to be passed to a goroutine.
-func SendResponseAccount(context *gin.Context, code int, message string, data interface{}) {
-	context.JSON(http.StatusOK, ResponseAccount{
-		Ret:  code,
-		Msg:  message,
-		Data: data,
-	})
-}
