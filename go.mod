@@ -3,7 +3,7 @@ module api-gin-web
 go 1.13
 
 require (
-	github.com/741369/go_utils v0.0.0-20200104105604-35eb20d6550a
+	github.com/741369/go_utils v0.0.0-20200430114526-83af5331f034
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/bwmarrin/snowflake v0.3.0
 	github.com/garyburd/redigo v1.6.0

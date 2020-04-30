@@ -34,3 +34,11 @@
 2020-04-30 19:32:53.597 INFO api-gin-web/main.go:66 Enter Control + C Shutdown Server{"trace_id":""}
 2020-04-30 19:32:58.061 INFO api-gin-web/main.go:71 Shutdown Server ...{"trace_id":""}
 2020-04-30 19:32:58.061 INFO api-gin-web/main.go:78 Server exiting{"trace_id":""}
+2020-04-30 19:47:22.669 INFO api-gin-web/main.go:48 Start to listening the incoming requests on http address: :8060{"trace_id":""}
+2020-04-30 19:47:22.670 INFO api-gin-web/main.go:66 Enter Control + C Shutdown Server{"trace_id":""}
+2020-04-30 19:47:23.675 INFO api-gin-web/main.go:71 Shutdown Server ...{"trace_id":""}
+2020-04-30 19:47:23.675 INFO api-gin-web/main.go:78 Server exiting{"trace_id":""}
+2020-04-30 21:25:32.539 INFO api-gin-web/main.go:48 Start to listening the incoming requests on http address: :8060
+2020-04-30 21:25:32.540 INFO api-gin-web/main.go:66 Enter Control + C Shutdown Server
+2020-04-30 21:25:33.697 INFO api-gin-web/main.go:71 Shutdown Server ...
+2020-04-30 21:25:33.698 INFO api-gin-web/main.go:78 Server exiting
