@@ -11,6 +11,7 @@ require (
 	github.com/google/uuid v1.1.1
 	github.com/jinzhu/gorm v1.9.12
 	github.com/prometheus/client_golang v1.5.1
+	github.com/shirou/gopsutil v2.20.3+incompatible
 	github.com/spf13/pflag v1.0.5
 	github.com/spf13/viper v1.6.3
 	github.com/swaggo/files v0.0.0-20190704085106-630677cd5c14

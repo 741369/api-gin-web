@@ -42,3 +42,18 @@
 2020-04-30 21:25:32.540 INFO api-gin-web/main.go:66 Enter Control + C Shutdown Server
 2020-04-30 21:25:33.697 INFO api-gin-web/main.go:71 Shutdown Server ...
 2020-04-30 21:25:33.698 INFO api-gin-web/main.go:78 Server exiting
+2020-05-02 00:28:00.798 INFO api-gin-web/main.go:48 Start to listening the incoming requests on http address: :8060
+2020-05-02 00:28:00.798 INFO api-gin-web/main.go:66 Enter Control + C Shutdown Server
+2020-05-02 00:30:22.422 INFO api-gin-web/main.go:71 Shutdown Server ...
+2020-05-02 00:30:22.422 INFO api-gin-web/main.go:78 Server exiting
+2020-05-02 00:30:30.180 INFO api-gin-web/main.go:48 Start to listening the incoming requests on http address: :8060
+2020-05-02 00:30:30.180 INFO api-gin-web/main.go:66 Enter Control + C Shutdown Server
+2020-05-02 00:31:19.370 INFO middleware/logger.go:132 request_response_data{"app-id":"","app-name":"","app-type":"","app-version":"","authorization":"","guid":"","latency_time":"880µs","mobile-version":"","partner-id":"","request_body":"","request_cookie":"_ga=GA1.1.445903507.1578139189; lang=zh-CN","request_date":"2020-05-02T00:31:19.370377+08:00","request_duration":0.00088,"request_ip_addr":"","request_method":"GET","request_path":"/info","request_ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36","request_url_param":"","response_status":200,"return_code":0,"return_data":"null","return_message":"ok","sdk-version":"","session-id":"","trace_id":"217be12b-cff2-4aa3-a6e6-f79ae6264a1a","user-id":""}
+2020-05-02 00:31:19.684 INFO middleware/logger.go:132 request_response_data{"app-id":"","app-name":"","app-type":"","app-version":"","authorization":"","guid":"","latency_time":"141µs","mobile-version":"","partner-id":"","request_body":"","request_cookie":"_ga=GA1.1.445903507.1578139189; lang=zh-CN","request_date":"2020-05-02T00:31:19.684838+08:00","request_duration":0.000141,"request_ip_addr":"","request_method":"GET","request_path":"/favicon.ico","request_ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36","request_url_param":"","response_status":404,"return_code":-999,"return_data":"null","return_message":"The incorrect API route.","sdk-version":"","session-id":"","trace_id":"aaddf7ca-cb34-4923-a903-6b2c2319c9a0","user-id":""}
+2020-05-02 00:31:43.293 INFO api-gin-web/main.go:71 Shutdown Server ...
+2020-05-02 00:31:43.293 INFO api-gin-web/main.go:78 Server exiting
+2020-05-02 00:32:00.484 INFO api-gin-web/main.go:48 Start to listening the incoming requests on http address: :8060
+2020-05-02 00:32:00.484 INFO api-gin-web/main.go:66 Enter Control + C Shutdown Server
+2020-05-02 00:32:12.182 INFO middleware/logger.go:132 request_response_data{"app-id":"","app-name":"","app-type":"","app-version":"","authorization":"","guid":"","latency_time":"201.21ms","mobile-version":"","partner-id":"","request_body":"","request_cookie":"_ga=GA1.1.445903507.1578139189; lang=zh-CN","request_date":"2020-05-02T00:32:12.182852+08:00","request_duration":0.20121,"request_ip_addr":"","request_method":"GET","request_path":"/sd/cpu","request_ua":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36","request_url_param":"","response_status":500,"return_code":0,"return_data":"null","return_message":"CRITICAL","sdk-version":"","session-id":"","trace_id":"6f6d57ec-9b78-4f32-b40c-5a885e7bf6f4","user-id":""}
+2020-05-02 00:32:19.542 INFO api-gin-web/main.go:71 Shutdown Server ...
+2020-05-02 00:32:19.543 INFO api-gin-web/main.go:78 Server exiting

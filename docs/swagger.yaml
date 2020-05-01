@@ -1,5 +1,5 @@
 basePath: /
-host: api-gin-web
+host: 127.0.0.1:8060
 info:
   contact:
     email: 1@lg1024.com
@@ -10,6 +10,40 @@ info:
   title: api-gin-web API
   version: 1.0.5
 paths:
+  /sd/cpu:
+    get:
+      consumes:
+      - text/html
+      description: CPU 使用量 DiskCheck checks the disk usage.
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: CPU 使用量
+  /sd/disk:
+    get:
+      consumes:
+      - text/html
+      description: 服务器硬盘使用量 DiskCheck checks the disk usage.
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: 'OK - Free space: 16321MB (15GB) / 51200MB (50GB) | Used: 31%'
+          schema:
+            type: string
+        "429":
+          description: WARNING
+          schema:
+            type: string
+        "500":
+          description: CRITICAL
+          schema:
+            type: string
+      summary: 服务器硬盘使用量
   /sd/health:
     get:
       consumes:
@@ -25,6 +59,32 @@ paths:
       summary: Shows OK as the ping-pong result
       tags:
       - sd
+  /sd/os:
+    get:
+      consumes:
+      - text/html
+      description: Os
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: OS
+  /sd/ram:
+    get:
+      consumes:
+      - text/html
+      description: 内存使用量 RAMCheck checks the disk usage.
+      produces:
+      - text/html
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 内存使用量
 schemes:
 - http
 - https

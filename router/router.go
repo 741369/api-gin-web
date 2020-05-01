@@ -1,6 +1,7 @@
 package router
 
 import (
+	"api-gin-web/controller/sd"
 	"net/http"
 
 	_ "api-gin-web/docs"
@@ -39,6 +40,19 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	swaggerRouter.Use(middleware.PushWhite())
 	{
 		swaggerRouter.GET("/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	}
+
+	g.Static("/static", "./static")
+	g.GET("/info", sd.Ping)
+
+	// 监控信息
+	svcd := g.Group("/sd")
+	{
+		svcd.GET("/health", sd.HealthCheck)
+		svcd.GET("/disk", sd.DiskCheck)
+		svcd.GET("/cpu", sd.CPUCheck)
+		svcd.GET("/ram", sd.RAMCheck)
+		svcd.GET("/os", sd.OSCheck)
 	}
 	g.GET("/metrics", gin.WrapH(promhttp.Handler()))
 

@@ -15,9 +15,61 @@
         "license": {},
         "version": "1.0.5"
     },
-    "host": "api-gin-web",
+    "host": "127.0.0.1:8060",
     "basePath": "/",
     "paths": {
+        "/sd/cpu": {
+            "get": {
+                "description": "CPU 使用量 DiskCheck checks the disk usage.",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "CPU 使用量",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/sd/disk": {
+            "get": {
+                "description": "服务器硬盘使用量 DiskCheck checks the disk usage.",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "服务器硬盘使用量",
+                "responses": {
+                    "200": {
+                        "description": "OK - Free space: 16321MB (15GB) / 51200MB (50GB) | Used: 31%",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "429": {
+                        "description": "WARNING",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "CRITICAL",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/sd/health": {
             "get": {
                 "description": "Shows OK as the ping-pong result",
@@ -31,6 +83,46 @@
                     "sd"
                 ],
                 "summary": "Shows OK as the ping-pong result",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/sd/os": {
+            "get": {
+                "description": "Os",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "OS",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/sd/ram": {
+            "get": {
+                "description": "内存使用量 RAMCheck checks the disk usage.",
+                "consumes": [
+                    "text/html"
+                ],
+                "produces": [
+                    "text/html"
+                ],
+                "summary": "内存使用量",
                 "responses": {
                     "200": {
                         "description": "OK",
