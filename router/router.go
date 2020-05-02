@@ -56,6 +56,13 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		svcd.GET("/metrics", gin.WrapH(promhttp.Handler())) // prometheus监控
 	}
 
+	// the jwt middleware
+	authMiddleware, err := middleware.AuthInit()
+	if err != nil {
+		panic("JWT init error" + err.Error())
+	}
+
+	g.POST("/login", authMiddleware.LoginHandler)
 	//g.POST("/login", authMiddleware.LoginHandler)
 
 	// Refresh time can be longer than token timeout

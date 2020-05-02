@@ -1,4 +1,21 @@
 basePath: /
+definitions:
+  model.Login:
+    properties:
+      code:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+      uuid:
+        type: string
+    required:
+    - code
+    - password
+    - username
+    - uuid
+    type: object
 host: 127.0.0.1:8060
 info:
   contact:
@@ -10,6 +27,41 @@ info:
   title: api-gin-web API
   version: 1.0.5
 paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: 获取token
+      parameters:
+      - description: Add account
+        in: body
+        name: username
+        required: true
+        schema:
+          $ref: '#/definitions/model.Login'
+      responses:
+        "200":
+          description: '{"code": 200, "expire": "2019-08-07T12:45:48+08:00", "token":
+            ".eyJleHAiOjE1NjUxNTMxNDgsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTU2NTE0OTU0OH0.-zvzHvbg0A"
+            }'
+          schema:
+            type: string
+      summary: 登陆
+      tags:
+      - login
+  /logout:
+    post:
+      consumes:
+      - application/json
+      description: 获取token
+      responses:
+        "200":
+          description: '{"code": 200, "msg": "成功退出系统" }'
+          schema:
+            type: string
+      security:
+      - "": []
+      summary: 退出登录
   /sd/cpu:
     get:
       consumes:

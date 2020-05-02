@@ -18,20 +18,6 @@ type Response struct {
 	TraceId interface{} `json:"trace_id"`
 }
 
-// ResponseWky return wky model struct
-type ResponseWky struct {
-	Code    int         `json:"iRet"`
-	Message string      `json:"sMsg"`
-	Data    interface{} `json:"data"`
-}
-
-// ResponseAccount return account model struct
-type ResponseAccount struct {
-	Ret  int         `json:"ret"`
-	Msg  string      `json:"msg"`
-	Data interface{} `json:"data"`
-}
-
 // SendResponse returns a copy of the current context that can be safely used outside the request's scope.
 // This has to be used when the context has to be passed to a goroutine.
 func SendResponse(context *gin.Context, err error, data interface{}) {

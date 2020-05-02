@@ -79,22 +79,15 @@ func Logging() gin.HandlerFunc {
 
 		// get code and message
 		var response controller.Response
-		var responseWky controller.ResponseWky
-		var responseAccount controller.ResponseAccount
 
 		if err := json.Unmarshal(blw.body.Bytes(), &response); err == nil && response.Message != "" {
 			code = response.Code
 			message = response.Message
-		} else if err := json.Unmarshal(blw.body.Bytes(), &responseWky); err == nil && responseWky.Message != "" {
-			code = responseWky.Code
-			message = responseWky.Message
-		} else if err := json.Unmarshal(blw.body.Bytes(), &responseAccount); err == nil && responseAccount.Msg != "" {
-			code = responseAccount.Ret
-			message = responseAccount.Msg
 		} else {
 			log.Infof(c, "response body can not unmarshal to controller.Response struct, body: `%s`, err = %v \n", blw.body.Bytes(), err)
 			code = errno.InternalServerError.Code
-			message = err.Error()
+			message = ""
+			//message = err.Error()
 			//log.Errorf(err, "%s | %s | %s %s | {code: %d, message: %s}", latency, ip, pad.Right(method, 5, ""), path, code, message)
 		}
 
