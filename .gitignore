@@ -1,4 +1,4 @@
 .git
-logs
 api-gin-web
 log
+log/*
