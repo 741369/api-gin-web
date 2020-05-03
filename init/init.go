@@ -7,7 +7,10 @@
 package init
 
 import (
+	"api-gin-web/model"
+	"api-gin-web/model/base"
 	"github.com/741369/go_utils/log"
+	"github.com/jinzhu/gorm"
 	"net/http"
 	"time"
 
@@ -15,7 +18,6 @@ import (
 	"os"
 	"strings"
 
-	"api-gin-web/model"
 	"github.com/spf13/viper"
 )
 
@@ -42,8 +44,9 @@ func init() {
 	}()*/
 
 	// init db
-	go model.DB.Init()
-	go model.OpenRedis()
+	base.DB.Init()
+	AutoMigrate(base.DB.TestDB)
+	go base.OpenRedis()
 	//defer model.DB.Close()
 
 	// http请求过期时间
@@ -122,3 +125,15 @@ func (c *Config) initLog() {
 //		log.Infof(nil, "Config file changed: %s", e.Name)
 //	})
 //}
+
+func AutoMigrate(db *gorm.DB) error {
+	//if config.DatabaseConfig.Dbtype == "mysql" {
+	//	db = db.Set("gorm:table_options", "ENGINE=InnoDB CHARSET=utf8mb4")
+	//}
+	db.SingularTable(true)
+	return db.AutoMigrate(
+		new(model.SysOperLog),
+		new(model.SysUser),
+		new(model.SysRole),
+	).Error
+}

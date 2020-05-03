@@ -20,9 +20,12 @@ import (
 var store = base64Captcha.DefaultMemStore
 
 func PayloadFunc(data interface{}) jwt.MapClaims {
+	fmt.Println("=====", data)
 	if v, ok := data.(map[string]interface{}); ok {
+		fmt.Println("===", v, "==", ok)
 		u, _ := v["user"].(model.SysUser)
 		r, _ := v["role"].(model.SysRole)
+		fmt.Println("===", u)
 		return jwt.MapClaims{
 			jwt.IdentityKey:  u.UserId,
 			jwt.RoleIdKey:    r.RoleId,

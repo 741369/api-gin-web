@@ -6,29 +6,18 @@
 
 package model
 
+import (
+	"api-gin-web/model/base"
+	"errors"
+	"golang.org/x/crypto/bcrypt"
+	"strconv"
+)
+
 type Login struct {
 	Username string `form:"UserName" json:"username" binding:"required"`
 	Password string `form:"Password" json:"password" binding:"required"`
 	Code     string `form:"Code" json:"code" binding:"required"`
 	UUID     string `form:"UUID" json:"uuid" binding:"required"`
-}
-
-type SysRole struct {
-	RoleId    int    `json:"roleId" gorm:"primary_key;AUTO_INCREMENT"` // 角色编码
-	RoleName  string `json:"roleName" gorm:"type:varchar(128);"`       // 角色名称
-	Status    string `json:"status" gorm:"type:int(1);"`               //
-	RoleKey   string `json:"roleKey" gorm:"type:varchar(128);"`        //角色代码
-	RoleSort  int    `json:"roleSort" gorm:"type:int(4);"`             //角色排序
-	Flag      string `json:"flag" gorm:"type:varchar(128);"`           //
-	CreateBy  string `json:"createBy" gorm:"type:varchar(128);"`       //
-	UpdateBy  string `json:"updateBy" gorm:"type:varchar(128);"`       //
-	Remark    string `json:"remark" gorm:"type:varchar(255);"`         //备注
-	Admin     bool   `json:"admin" gorm:"type:char(1);"`
-	DataScope string `json:"dataScope" gorm:"-"`
-	Params    string `json:"params" gorm:"-"`
-	MenuIds   []int  `json:"menuIds" gorm:"-"`
-	DeptIds   []int  `json:"deptIds" gorm:"-"`
-	BaseModel
 }
 
 // User
@@ -77,8 +66,7 @@ type SysUserB struct {
 	Status    string `gorm:"type:int(1);" json:"status"`
 	DataScope string `gorm:"-" json:"dataScope"`
 	Params    string `gorm:"-" json:"params"`
-
-	BaseModel
+	base.BaseModel
 }
 
 type SysUser struct {
@@ -112,4 +100,104 @@ type SysUserView struct {
 
 func (u *Login) GetUser() (user SysUser, role SysRole, e error) {
 	return
+}
+
+// 获取用户数据
+func (e *SysUser) Get() (SysUserView SysUserView, err error) {
+	db := base.DB.TestDB.Select([]string{"sys_user.*", "sys_role.role_name"})
+	db = db.Joins("left join sys_role on sys_user.role_id=sys_role.role_id")
+	if e.UserId != 0 {
+		db = db.Where("user_id = ?", e.UserId)
+	}
+
+	if e.Username != "" {
+		db = db.Where("username = ?", e.Username)
+	}
+
+	if e.Password != "" {
+		db = db.Where("password = ?", e.Password)
+	}
+
+	if e.RoleId != 0 {
+		db = db.Where("role_id = ?", e.RoleId)
+	}
+
+	if e.DeptId != 0 {
+		db = db.Where("dept_id = ?", e.DeptId)
+	}
+
+	if e.PostId != 0 {
+		db = db.Where("post_id = ?", e.PostId)
+	}
+
+	if err = db.First(&SysUserView).Error; err != nil {
+		return
+	}
+	return
+}
+
+func (e *SysUser) GetPage(offset int, limit int) ([]SysUserPage, int, error) {
+	var doc []SysUserPage
+
+	db := base.DB.TestDB.Select("sys_user.*,sys_dept.dept_name")
+	db = db.Joins("left join sys_dept on sys_dept.dept_id = sys_user.dept_id")
+
+	if e.Username != "" {
+		db = db.Where("username = ?", e.Username)
+	}
+
+	if e.DeptId != 0 {
+		db = db.Where("sys_user.dept_id in (select dept_id from sys_dept where dept_path like ? )", "%"+strconv.Itoa(e.DeptId)+"%")
+	}
+
+	// 数据权限控制
+	dataPermission := new(DataPermission)
+	dataPermission.UserId, _ = strconv.Atoi(e.DataScope)
+	db = dataPermission.GetDataScope("sys_user", db)
+
+	var count int
+
+	if err := db.Offset(offset).Limit(limit).Find(&doc).Error; err != nil {
+		return nil, 0, err
+	}
+	db.Count(&count)
+	return doc, count, nil
+}
+
+//添加
+func (e SysUser) InsertUser() (id int, err error) {
+	if err = e.Encrypt(); err != nil {
+		return
+	}
+
+	db := base.DB.TestDB
+	// check 用户名
+	var count int
+	db.Where("username = ?", e.Username).Count(&count)
+	if count > 0 {
+		err = errors.New("账户已存在！")
+		return
+	}
+
+	//添加数据
+	if err = db.Create(&e).Error; err != nil {
+		return
+	}
+	id = e.UserId
+	return
+}
+
+//加密
+func (e *SysUser) Encrypt() (err error) {
+	if e.Password == "" {
+		return
+	}
+
+	var hash []byte
+	if hash, err = bcrypt.GenerateFromPassword([]byte(e.Password), bcrypt.DefaultCost); err != nil {
+		return
+	} else {
+		e.Password = string(hash)
+		return
+	}
 }

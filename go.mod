@@ -21,4 +21,5 @@ require (
 	github.com/swaggo/gin-swagger v1.2.0
 	github.com/swaggo/swag v1.6.5
 	github.com/willf/pad v0.0.0-20200313202418-172aa767f2a4
+	golang.org/x/crypto v0.0.0-20191205180655-e7c4368fe9dd
 )
