@@ -2,6 +2,7 @@ package router
 
 import (
 	"api-gin-web/controller/sd"
+	"api-gin-web/controller/user"
 	"net/http"
 
 	_ "api-gin-web/docs"
@@ -63,12 +64,14 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	}
 
 	g.POST("/login", authMiddleware.LoginHandler)
+	g.POST("/logout", authMiddleware.LogOutHandler)
 	//g.POST("/login", authMiddleware.LoginHandler)
 
 	auth := g.Group("/api/v1")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
 		auth.GET("/dashboard", Dashboard)
+		auth.POST("/sysuser", user.LogOut) // 未解决退出登录问题
 	}
 	// Refresh time can be longer than token timeout
 	//g.GET("/refresh_token", authMiddleware.RefreshHandler)

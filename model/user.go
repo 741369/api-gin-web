@@ -9,8 +9,11 @@ package model
 import (
 	"api-gin-web/model/base"
 	"errors"
+	"fmt"
+	"github.com/741369/go_utils/log"
 	"golang.org/x/crypto/bcrypt"
 	"strconv"
+	"strings"
 )
 
 type Login struct {
@@ -98,7 +101,23 @@ type SysUserView struct {
 	RoleName string `gorm:"column:role_name"  json:"role_name"`
 }
 
-func (u *Login) GetUser() (user SysUser, role SysRole, e error) {
+func (u *Login) GetUser() (user SysUser, role SysRole, err error) {
+	err = base.DB.TestDB.Where("username = ? ", u.Username).Find(&user).Error
+	if err != nil {
+		if strings.Contains(err.Error(), "record not found") {
+			err = errors.New("账号或密码错误(代码204)")
+		}
+		return
+	}
+	log.Infof(nil, "input_pwd = %s, user_pwd = %s", u.Password, user.Password)
+	_, err = CompareHashAndPassword(user.Password, u.Password)
+	if err != nil {
+		if strings.Contains(err.Error(), "hashedPassword is not the hash of the given password") {
+			err = errors.New("账号或密码错误(代码201)")
+		}
+		return
+	}
+	err = base.DB.TestDB.Where("role_id = ? ", user.RoleId).First(&role).Error
 	return
 }
 
@@ -200,4 +219,13 @@ func (e *SysUser) Encrypt() (err error) {
 		e.Password = string(hash)
 		return
 	}
+}
+
+func CompareHashAndPassword(e string, p string) (bool, error) {
+	err := bcrypt.CompareHashAndPassword([]byte(e), []byte(p))
+	if err != nil {
+		fmt.Println(err.Error())
+		return false, err
+	}
+	return true, nil
 }

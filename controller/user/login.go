@@ -7,11 +7,13 @@
 package user
 
 import (
+	"api-gin-web/controller"
 	"api-gin-web/model"
 	"api-gin-web/router/middleware/jwt"
-	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 	"github.com/mojocn/base64Captcha"
+
 	//"github.com/mssola/user_agent"
 	"log"
 	"net/http"
@@ -20,12 +22,9 @@ import (
 var store = base64Captcha.DefaultMemStore
 
 func PayloadFunc(data interface{}) jwt.MapClaims {
-	fmt.Println("=====", data)
 	if v, ok := data.(map[string]interface{}); ok {
-		fmt.Println("===", v, "==", ok)
 		u, _ := v["user"].(model.SysUser)
 		r, _ := v["role"].(model.SysRole)
-		fmt.Println("===", u)
 		return jwt.MapClaims{
 			jwt.IdentityKey:  u.UserId,
 			jwt.RoleIdKey:    r.RoleId,
@@ -68,16 +67,13 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 		//loginlog.Create()
 		return nil, jwt.ErrMissingLoginValues
 	}
-	fmt.Println("====", loginVals)
 	if !store.Verify(loginVals.UUID, loginVals.Code, true) {
 		//return nil, jwt.ErrInvalidVerificationode
 	}
 
 	user, role, e := loginVals.GetUser()
-	fmt.Println("===", user, "==", role, "==", e)
 	if e == nil {
-		return map[string]interface{}{"user": "user", "role": "role"}, nil
-		//return map[string]interface{}{"user": user, "role": role}, nil
+		return map[string]interface{}{"user": user, "role": role}, nil
 	} else {
 		log.Println(e.Error())
 	}
@@ -100,6 +96,32 @@ func LogOut(c *gin.Context) {
 		"msg":  "退出成功",
 	})
 
+}
+
+// @Summary 创建用户
+// @Description 获取JSON
+// @Tags 用户
+// @Accept  application/json
+// @Product application/json
+// @Param data body models.SysUser true "用户数据"
+// @Success 200 {string} string	"{"code": 200, "message": "添加成功"}"
+// @Success 200 {string} string	"{"code": -1, "message": "添加失败"}"
+// @Router /api/v1/sysuser [post]
+func InsertSysUser(c *gin.Context) {
+	var sysuser model.SysUser
+	err := c.BindWith(&sysuser, binding.JSON)
+	if err != nil {
+		controller.SendResponse(c, err, nil)
+		return
+	}
+
+	sysuser.CreateBy = "test"
+	id, err := sysuser.InsertUser()
+	if err != nil {
+		controller.SendResponse(c, err, nil)
+		return
+	}
+	controller.SendResponse(c, nil, id)
 }
 
 func Authorizator(data interface{}, c *gin.Context) bool {
