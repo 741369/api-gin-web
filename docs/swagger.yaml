@@ -16,6 +16,63 @@ definitions:
     - username
     - uuid
     type: object
+  model.SysUser:
+    properties:
+      avatar:
+        description: 头像
+        type: string
+      createBy:
+        type: string
+      createdAt:
+        type: string
+      dataScope:
+        type: string
+      deletedAt:
+        type: string
+      deptId:
+        description: 部门编码
+        type: integer
+      email:
+        description: 邮箱
+        type: string
+      nickName:
+        description: 昵称
+        type: string
+      params:
+        type: string
+      password:
+        description: 密码
+        type: string
+      phone:
+        description: 手机号
+        type: string
+      postId:
+        description: 职位编码
+        type: integer
+      remark:
+        description: 备注
+        type: string
+      roleId:
+        description: 角色编码
+        type: integer
+      salt:
+        description: 盐
+        type: string
+      sex:
+        description: 性别
+        type: string
+      status:
+        type: string
+      updateBy:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        description: 编码
+        type: integer
+      username:
+        type: string
+    type: object
 host: 127.0.0.1:8060
 info:
   contact:
@@ -27,6 +84,65 @@ info:
   title: api-gin-web API
   version: 1.0.5
 paths:
+  /api/v1/captcha:
+    get:
+      consumes:
+      - application/json
+      description: 获取图片验证码
+      responses:
+        "200":
+          description: '{"data": "图片base64", "id":"图片唯一id" }'
+          schema:
+            type: string
+      summary: 获取图片验证码
+      tags:
+      - system
+  /api/v1/dashboard:
+    get:
+      consumes:
+      - application/json
+      description: 获取dashboard配置信息
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 获取dashboard配置信息
+      tags:
+      - system
+  /api/v1/monitor/server:
+    get:
+      consumes:
+      - application/json
+      description: 获取服务器基本信息
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 获取服务器基本信息
+      tags:
+      - system
+  /api/v1/sysuser:
+    post:
+      consumes:
+      - application/json
+      description: 获取JSON
+      parameters:
+      - description: 用户数据
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.SysUser'
+      responses:
+        "200":
+          description: '{"code": -1, "message": "添加失败"}'
+          schema:
+            type: string
+      summary: 创建用户
+      tags:
+      - 用户
   /login:
     post:
       consumes:
@@ -99,18 +215,16 @@ paths:
   /sd/health:
     get:
       consumes:
-      - application/json
-      description: Shows OK as the ping-pong result
+      - text/html
+      description: 健康状况
       produces:
-      - application/json
+      - text/html
       responses:
         "200":
           description: OK
           schema:
             type: string
-      summary: Shows OK as the ping-pong result
-      tags:
-      - sd
+      summary: 健康状况 HealthCheck shows OK as the ping-pong result.
   /sd/os:
     get:
       consumes:

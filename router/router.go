@@ -2,6 +2,7 @@ package router
 
 import (
 	"api-gin-web/controller/sd"
+	"api-gin-web/controller/system"
 	"api-gin-web/controller/user"
 	"net/http"
 
@@ -64,63 +65,20 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	}
 
 	g.POST("/login", authMiddleware.LoginHandler)
-	g.POST("/logout", authMiddleware.LogOutHandler)
-	//g.POST("/login", authMiddleware.LoginHandler)
+	g.POST("/logout", user.Logout) // 未解决退出登录问题
+
+	apiv1 := g.Group("/api/v1")
+	{
+		apiv1.GET("/dashboard", system.Dashboard)       // 获取首页dashboard
+		apiv1.GET("/monitor/server", system.ServerInfo) // 获取服务器信息
+		apiv1.GET("/captcha", system.GenerateCaptcha)   // 生成图片验证码
+	}
 
 	auth := g.Group("/api/v1")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
-		auth.GET("/dashboard", Dashboard)
-		auth.POST("/sysuser", user.LogOut) // 未解决退出登录问题
+		auth.POST("/sysuser", user.InsertSysUser)
 	}
-	// Refresh time can be longer than token timeout
-	//g.GET("/refresh_token", authMiddleware.RefreshHandler)
 
 	return g
-}
-
-func Dashboard(c *gin.Context) {
-
-	var user = make(map[string]interface{})
-	user["login_name"] = "admin"
-	user["user_id"] = 1
-	user["user_name"] = "管理员"
-	user["dept_id"] = 1
-
-	var cmenuList = make(map[string]interface{})
-	cmenuList["children"] = nil
-	cmenuList["parent_id"] = 1
-	cmenuList["title"] = "用户管理"
-	cmenuList["name"] = "Sysuser"
-	cmenuList["icon"] = "user"
-	cmenuList["order_num"] = 1
-	cmenuList["id"] = 4
-	cmenuList["path"] = "sysuser"
-	cmenuList["component"] = "sysuser/index"
-
-	var lista = make([]interface{}, 1)
-	lista[0] = cmenuList
-
-	var menuList = make(map[string]interface{})
-	menuList["children"] = lista
-	menuList["parent_id"] = 1
-	menuList["name"] = "Upms"
-	menuList["title"] = "权限管理"
-	menuList["icon"] = "example"
-	menuList["order_num"] = 1
-	menuList["id"] = 4
-	menuList["path"] = "/upms"
-	menuList["component"] = "Layout"
-
-	var list = make([]interface{}, 1)
-	list[0] = menuList
-	var data = make(map[string]interface{})
-	data["user"] = user
-	data["menuList"] = list
-
-	var r = make(map[string]interface{})
-	r["code"] = 200
-	r["data"] = data
-
-	c.JSON(200, r)
 }

@@ -68,7 +68,7 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 		return nil, jwt.ErrMissingLoginValues
 	}
 	if !store.Verify(loginVals.UUID, loginVals.Code, true) {
-		//return nil, jwt.ErrInvalidVerificationode
+		return nil, jwt.ErrInvalidVerificationode
 	}
 
 	user, role, e := loginVals.GetUser()
@@ -90,7 +90,7 @@ func Authenticator(c *gin.Context) (interface{}, error) {
 // @Success 200 {string} string "{"code": 200, "msg": "成功退出系统" }"
 // @Router /logout [post]
 // @Security
-func LogOut(c *gin.Context) {
+func Logout(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "退出成功",
@@ -103,7 +103,7 @@ func LogOut(c *gin.Context) {
 // @Tags 用户
 // @Accept  application/json
 // @Product application/json
-// @Param data body models.SysUser true "用户数据"
+// @Param data body model.SysUser true "用户数据"
 // @Success 200 {string} string	"{"code": 200, "message": "添加成功"}"
 // @Success 200 {string} string	"{"code": -1, "message": "添加失败"}"
 // @Router /api/v1/sysuser [post]
