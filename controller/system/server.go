@@ -23,7 +23,7 @@ const (
 )
 
 // @Summary 获取服务器基本信息
-// @Tags system
+// @Tags 工具 / system
 // @Description 获取服务器基本信息
 // @Accept  application/json
 // @Product application/json

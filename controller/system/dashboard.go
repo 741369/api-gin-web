@@ -9,7 +9,7 @@ package system
 import "github.com/gin-gonic/gin"
 
 // @Summary 获取dashboard配置信息
-// @Tags system
+// @Tags 工具 / system
 // @Description 获取dashboard配置信息
 // @Accept  application/json
 // @Product application/json

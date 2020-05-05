@@ -13,7 +13,7 @@ import (
 )
 
 // @Summary 获取图片验证码
-// @Tags system
+// @Tags 工具 / system
 // @Description 获取图片验证码
 // @Accept  application/json
 // @Product application/json
