@@ -818,18 +818,16 @@ paths:
   /sd/health:
     get:
       consumes:
-      - application/json
-      description: Shows OK as the ping-pong result
+      - text/html
+      description: 健康状况
       produces:
-      - application/json
+      - text/html
       responses:
         "200":
           description: OK
           schema:
             type: string
-      summary: Shows OK as the ping-pong result
-      tags:
-      - sd
+      summary: 健康状况 HealthCheck shows OK as the ping-pong result.
   /sd/os:
     get:
       consumes:
