@@ -19,17 +19,16 @@ type DBColumns struct {
 	ColumnComment          string `gorm:"column:COLUMN_COMMENT" json:"columnComment"`
 }
 
-func (e *DBColumns) GetPage(pageSize int, pageIndex int) (doc []DBColumns, count int, err error) {
+func (e *DBColumns) GetPage(offset, limit int) (doc []DBColumns, count int, err error) {
 
-	db := DB.TestDB.Select("*").Table("information_schema.`COLUMNS`")
+	db := DB.TestDB.Select("*").Table("information_schema.COLUMNS")
 	db = db.Where("table_schema= ? ", "testdb")
 
 	if e.TableName != "" {
-		return nil, 0, errors.New("table name cannot be empty！")
+		db = db.Where("TABLE_NAME = ?", e.TableName)
 	}
 
-	db = db.Where("TABLE_NAME = ?", e.TableName)
-	err = db.Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(&doc).Count(&count).Error
+	err = db.Offset(offset).Limit(limit).Find(&doc).Count(&count).Error
 	return
 }
 

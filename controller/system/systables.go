@@ -3,6 +3,8 @@ package system
 import (
 	"api-gin-web/controller"
 	"api-gin-web/model/base"
+	"api-gin-web/utils"
+	"api-gin-web/utils/errno"
 	"github.com/gin-gonic/gin"
 	"strconv"
 	"strings"
@@ -11,27 +13,18 @@ import (
 // @Summary 分页列表数据
 // @Description 生成表分页列表
 // @Tags 工具 - 生成表
-// @Param tableName query string false "tableName / 数据表名称"
-// @Param pageSize query int false "pageSize / 页条数"
-// @Param pageIndex query int false "pageIndex / 页码"
+// @Param table_name query string false "table_name / 数据表名称"
+// @Param page query int false "page / 页码"
+// @Param page_size query int false "page_size / 页条数"
 // @Success 200 {object} controller.Response "{"code": 200, "data": [...]}"
 // @Router /api/v1/sys/tables/page [get]
 func GetSysTableList(c *gin.Context) {
 	var data base.SysTables
-	var err error
-	var pageSize = 10
-	var pageIndex = 1
 
-	if size := c.Request.FormValue("pageSize"); size != "" {
-		pageSize, _ = strconv.Atoi(size)
-	}
-
-	if index := c.Request.FormValue("pageIndex"); index != "" {
-		pageIndex, _ = strconv.Atoi(index)
-	}
-
-	data.TableName = c.Request.FormValue("tableName")
-	result, count, err := data.GetPage(pageSize, pageIndex)
+	reqParam := utils.PostParam2(c)
+	offset, limit := utils.GetPagePageSize(reqParam)
+	data.TableName = reqParam["table_name"]
+	result, count, err := data.GetPage(offset, limit)
 	if err != nil {
 		controller.SendResponse(c, err, nil)
 		return
@@ -40,8 +33,6 @@ func GetSysTableList(c *gin.Context) {
 	var mp = make(map[string]interface{}, 3)
 	mp["list"] = result
 	mp["count"] = count
-	mp["pageIndex"] = pageIndex
-	mp["pageSize"] = pageSize
 	controller.SendResponse(c, nil, mp)
 }
 
@@ -54,7 +45,12 @@ func GetSysTableList(c *gin.Context) {
 // @Security
 func GetSysTables(c *gin.Context) {
 	var data base.SysTables
-	data.TableId, _ = strconv.Atoi(c.Param("tableId"))
+	var err error
+	data.TableId, err = strconv.Atoi(c.Param("tableId"))
+	if err != nil || data.TableId == 0 {
+		controller.SendResponse(c, errno.ErrParam, nil)
+		return
+	}
 	result, err := data.Get()
 	if err != nil {
 		controller.SendResponse(c, err, nil)

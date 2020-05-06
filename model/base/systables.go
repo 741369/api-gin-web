@@ -39,7 +39,7 @@ type Params struct {
 	TreeName       string `gorm:"-" json:"treeName"`
 }
 
-func (e *SysTables) GetPage(pageSize int, pageIndex int) ([]SysTables, int, error) {
+func (e *SysTables) GetPage(offset, limit int) ([]SysTables, int, error) {
 	var doc []SysTables
 
 	table := DB.TestDB.Select("*").Table("sys_tables")
@@ -53,7 +53,7 @@ func (e *SysTables) GetPage(pageSize int, pageIndex int) ([]SysTables, int, erro
 
 	var count int
 
-	if err := table.Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(&doc).Error; err != nil {
+	if err := table.Offset(offset).Limit(limit).Find(&doc).Error; err != nil {
 		return nil, 0, err
 	}
 	table.Count(&count)

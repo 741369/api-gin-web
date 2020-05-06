@@ -3,8 +3,11 @@ package utils
 import (
 	"encoding/base64"
 	"encoding/json"
+	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
+	"io/ioutil"
 	"math/rand"
+	"net/url"
 	"regexp"
 	"strconv"
 	"strings"
@@ -110,6 +113,62 @@ func GetUuidString() string {
 
 func GetUuidInt64() uint32 {
 	return uuid.New().ID()
+}
+
+func PostParam(c *gin.Context) map[string]interface{} {
+	requestParam := ""
+	if strings.ToLower(c.Request.Method) == "get" {
+		requestParam = c.Request.URL.RawQuery
+	} else if strings.ToLower(c.Request.Method) == "post" || strings.ToLower(c.Request.Method) == "put" {
+		if strings.Contains(strings.ToLower(c.Request.Header.Get("Content-Type")), "application/x-www-form-urlencoded") {
+			body, _ := ioutil.ReadAll(c.Request.Body)
+			requestParam = string(body)
+		} else if strings.Contains(strings.ToLower(c.Request.Header.Get("Content-Type")), "application/json") {
+			var data map[string]interface{}
+			err := c.BindJSON(&data)
+			log.Infof(nil, "[PostParam2] %v, %v", data, err)
+			if err != nil {
+				return nil
+			} else {
+				//mapInterface, _ := InterfaceToMapInterface(data)
+				return data
+			}
+		}
+	} else if strings.ToLower(c.Request.Method) == "delete" {
+		requestParam = c.Request.URL.RawQuery
+	}
+	u, _ := url.ParseQuery(requestParam)
+	paramsBody := make(map[string]interface{})
+	for k, v := range u {
+		if len(v) > 0 {
+			paramsBody[k] = v[0]
+		}
+	}
+	return paramsBody
+}
+
+func PostParam2(c *gin.Context) map[string]string {
+	requestParam := ""
+	if strings.ToLower(c.Request.Method) == "get" {
+		requestParam = c.Request.URL.RawQuery
+	} else if strings.ToLower(c.Request.Method) == "post" || strings.ToLower(c.Request.Method) == "put" {
+		if strings.Contains(strings.ToLower(c.Request.Header.Get("Content-Type")), "application/x-www-form-urlencoded") {
+			body, _ := ioutil.ReadAll(c.Request.Body)
+			requestParam = string(body)
+		} else if strings.Contains(strings.ToLower(c.Request.Header.Get("Content-Type")), "application/json") {
+			return nil
+		}
+	} else if strings.ToLower(c.Request.Method) == "delete" {
+		requestParam = c.Request.URL.RawQuery
+	}
+	u, _ := url.ParseQuery(requestParam)
+	paramsBody := make(map[string]string)
+	for k, v := range u {
+		if len(v) > 0 {
+			paramsBody[k] = v[0]
+		}
+	}
+	return paramsBody
 }
 
 // 分页查询数据, return offset, limit

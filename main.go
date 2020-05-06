@@ -45,7 +45,7 @@ func main() {
 	router.Load(g)
 
 	// Start to listening the incoming requests
-	log.Infof(nil, "Start to listening the incoming requests on http address: %s", viper.GetString("addr"))
+	log.Infof(nil, "Start to listening the incoming requests on http address: %s", viper.GetString("url"))
 
 	srv := &http.Server{
 		ReadTimeout:    5 * time.Second,

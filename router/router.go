@@ -72,14 +72,16 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 		apiv1.GET("/dashboard", system.Dashboard)       // 获取首页dashboard
 		apiv1.GET("/monitor/server", system.ServerInfo) // 获取服务器信息
 		apiv1.GET("/captcha", system.GenerateCaptcha)   // 生成图片验证码
-		apiv1.GET("/db/tables/page", system.GetDBTableList)
+
+		apiv1.GET("/db/tables/page", system.GetDBTableList) // 获取数据库表结构
 		apiv1.GET("/db/columns/page", system.GetDBColumnList)
 
-		apiv1.GET("/sys/tables/page", system.GetSysTableList)
-		apiv1.POST("/sys/tables/info", system.InsertSysTable)
-		apiv1.PUT("/sys/tables/info", system.UpdateSysTable)
-		apiv1.DELETE("/sys/tables/info/:tableId", system.DeleteSysTables)
 		apiv1.GET("/sys/tables/info/:tableId", system.GetSysTables)
+		apiv1.GET("/sys/tables", system.GetSysTableList)
+		apiv1.POST("/sys/tables", system.InsertSysTable)
+		apiv1.PUT("/sys/tables", system.UpdateSysTable)
+		apiv1.DELETE("/sys/tables/:tableId", system.DeleteSysTables)
+
 		apiv1.GET("/gen/preview/:tableId", system.Preview)
 		apiv1.GET("/menuTreeselect", system.GetMenuTreeelect)
 		apiv1.GET("/dict/databytype/:dictType", system.GetDictDataByDictType)

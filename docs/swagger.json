@@ -68,20 +68,21 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "tableName / 数据表名称",
-                        "name": "tableName",
+                        "description": "table_name / 数据表名称",
+                        "name": "table_name",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "page / 页码",
+                        "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "pageSize / 页条数",
-                        "name": "pageSize",
-                        "in": "query"
-                    },
-                    {
-                        "type": "integer",
-                        "description": "pageIndex / 页码",
-                        "name": "pageIndex",
+                        "description": "page_size / 页条数",
+                        "name": "page_size",
                         "in": "query"
                     }
                 ],
@@ -105,20 +106,20 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "tableName / 数据表名称",
-                        "name": "tableName",
+                        "description": "table_name / 数据表名称",
+                        "name": "table_name",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "pageSize / 页条数",
-                        "name": "pageSize",
+                        "description": "page / 页码",
+                        "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "pageIndex / 页码",
-                        "name": "pageIndex",
+                        "description": "page_size / 页条数",
+                        "name": "page_size",
                         "in": "query"
                     }
                 ],
@@ -774,20 +775,20 @@
                 "parameters": [
                     {
                         "type": "string",
-                        "description": "tableName / 数据表名称",
-                        "name": "tableName",
+                        "description": "table_name / 数据表名称",
+                        "name": "table_name",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "pageSize / 页条数",
-                        "name": "pageSize",
+                        "description": "page / 页码",
+                        "name": "page",
                         "in": "query"
                     },
                     {
                         "type": "integer",
-                        "description": "pageIndex / 页码",
-                        "name": "pageIndex",
+                        "description": "page_size / 页条数",
+                        "name": "page_size",
                         "in": "query"
                     }
                 ],

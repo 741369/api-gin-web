@@ -262,17 +262,18 @@ paths:
     get:
       description: 数据库表列分页列表 / database table column page list
       parameters:
-      - description: tableName / 数据表名称
+      - description: table_name / 数据表名称
         in: query
-        name: tableName
+        name: table_name
+        required: true
         type: string
-      - description: pageSize / 页条数
+      - description: page / 页码
         in: query
-        name: pageSize
+        name: page
         type: integer
-      - description: pageIndex / 页码
+      - description: page_size / 页条数
         in: query
-        name: pageIndex
+        name: page_size
         type: integer
       responses:
         "200":
@@ -286,17 +287,17 @@ paths:
     get:
       description: 数据库表分页列表 / database table page list
       parameters:
-      - description: tableName / 数据表名称
+      - description: table_name / 数据表名称
         in: query
-        name: tableName
+        name: table_name
         type: string
-      - description: pageSize / 页条数
+      - description: page / 页码
         in: query
-        name: pageSize
+        name: page
         type: integer
-      - description: pageIndex / 页码
+      - description: page_size / 页条数
         in: query
-        name: pageIndex
+        name: page_size
         type: integer
       responses:
         "200":
@@ -706,17 +707,17 @@ paths:
     get:
       description: 生成表分页列表
       parameters:
-      - description: tableName / 数据表名称
+      - description: table_name / 数据表名称
         in: query
-        name: tableName
+        name: table_name
         type: string
-      - description: pageSize / 页条数
+      - description: page / 页码
         in: query
-        name: pageSize
+        name: page
         type: integer
-      - description: pageIndex / 页码
+      - description: page_size / 页条数
         in: query
-        name: pageIndex
+        name: page_size
         type: integer
       responses:
         "200":

@@ -2,6 +2,7 @@ package base
 
 import (
 	"errors"
+	"github.com/741369/go_utils/log"
 )
 
 type DBTables struct {
@@ -14,19 +15,20 @@ type DBTables struct {
 	TableComment   string `gorm:"column:TABLE_COMMENT" json:"tableComment"`
 }
 
-func (e *DBTables) GetPage(pageSize int, pageIndex int) ([]DBTables, int, error) {
+func (e *DBTables) GetPage(offset, limit int) ([]DBTables, int, error) {
 	var doc []DBTables
 
 	table := DB.TestDB.Select("*").Table("information_schema.tables")
 	table = table.Where("table_schema= ? ", "testdb")
 
+	log.Infof(nil, "%#v", e)
 	if e.TableName != "" {
 		table = table.Where("TABLE_NAME = ?", e.TableName)
 	}
 
 	var count int
 
-	if err := table.Offset((pageIndex - 1) * pageSize).Limit(pageSize).Find(&doc).Error; err != nil {
+	if err := table.Offset(offset).Limit(limit).Find(&doc).Error; err != nil {
 		return nil, 0, err
 	}
 	table.Count(&count)
