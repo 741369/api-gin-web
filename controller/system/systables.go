@@ -12,7 +12,7 @@ import (
 
 // @Summary 分页列表数据
 // @Description 生成表分页列表
-// @Tags 工具 - 生成表
+// @Tags 工具 / system
 // @Param table_name query string false "table_name / 数据表名称"
 // @Param page query int false "page / 页码"
 // @Param page_size query int false "page_size / 页条数"
@@ -38,7 +38,7 @@ func GetSysTableList(c *gin.Context) {
 
 // @Summary 获取配置
 // @Description 获取JSON
-// @Tags 工具 - 生成表
+// @Tags 工具 / system
 // @Param configKey path int true "configKey"
 // @Success 200 {object} controller.Response "{"code": 200, "data": [...]}"
 // @Router /api/v1/sys/tables/info/{tableId} [get]
@@ -65,7 +65,7 @@ func GetSysTables(c *gin.Context) {
 
 // @Summary 添加表结构
 // @Description 添加表结构
-// @Tags 工具 - 生成表
+// @Tags 工具 / system
 // @Accept  application/json
 // @Product application/json
 // @Param tables query string false "tableName / 数据表名称"
@@ -167,7 +167,7 @@ func InsertSysTable(c *gin.Context) {
 
 // @Summary 修改表结构
 // @Description 修改表结构
-// @Tags 工具 - 生成表
+// @Tags 工具 / system
 // @Accept  application/json
 // @Product application/json
 // @Param data body model.Dept true "body"
@@ -194,7 +194,7 @@ func UpdateSysTable(c *gin.Context) {
 
 // @Summary 删除表结构
 // @Description 删除表结构
-// @Tags 工具 - 生成表
+// @Tags 工具 / system
 // @Param tableId path int true "tableId"
 // @Success 200 {string} string	"{"code": 200, "message": "删除成功"}"
 // @Success 200 {string} string	"{"code": -1, "message": "删除失败"}"

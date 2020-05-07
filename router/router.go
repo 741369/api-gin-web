@@ -90,7 +90,15 @@ func Load(g *gin.Engine, mw ...gin.HandlerFunc) *gin.Engine {
 	auth := g.Group("/api/v1")
 	auth.Use(authMiddleware.MiddlewareFunc())
 	{
-		auth.POST("/sysuser", user.InsertSysUser)
+		//auth.POST("/sysuser", user.InsertSysUser)
+
+		// 部门管理
+		auth.GET("/dept/list", system.GetDeptList)
+		auth.GET("/dept/tree", system.GetDeptTree)
+		auth.GET("/dept/:deptId", system.GetDept)
+		auth.POST("/dept", system.InsertDept)
+		auth.PUT("/dept", system.UpdateDept)
+		auth.DELETE("/dept/:id", system.DeleteDept)
 	}
 
 	return g

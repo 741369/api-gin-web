@@ -39,9 +39,7 @@ type Params struct {
 	TreeName       string `gorm:"-" json:"treeName"`
 }
 
-func (e *SysTables) GetPage(offset, limit int) ([]SysTables, int, error) {
-	var doc []SysTables
-
+func (e *SysTables) GetPage(offset, limit int) (doc []SysTables, count int, err error) {
 	table := DB.TestDB.Select("*").Table("sys_tables")
 
 	if e.TableName != "" {
@@ -51,18 +49,14 @@ func (e *SysTables) GetPage(offset, limit int) ([]SysTables, int, error) {
 		table = table.Where("table_comment = ?", e.TableComment)
 	}
 
-	var count int
-
 	if err := table.Offset(offset).Limit(limit).Find(&doc).Error; err != nil {
 		return nil, 0, err
 	}
 	table.Count(&count)
-	return doc, count, nil
+	return
 }
 
-func (e *SysTables) Get() (SysTables, error) {
-	var doc SysTables
-	var err error
+func (e *SysTables) Get() (doc SysTables, err error) {
 	table := DB.TestDB.Select("*").Table("sys_tables")
 
 	if e.TableName != "" {
@@ -84,7 +78,7 @@ func (e *SysTables) Get() (SysTables, error) {
 		return doc, err
 	}
 
-	return doc, nil
+	return
 }
 
 func (e *SysTables) Create() (SysTables, error) {

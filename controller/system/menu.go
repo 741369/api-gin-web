@@ -48,7 +48,7 @@ func GetMenu(c *gin.Context) {
 	controller.SendResponse(c, nil, result)
 }
 
-func GetMenuTreeRoleselect(c *gin.Context) {
+func GetMenuTreeRoleSelect(c *gin.Context) {
 	var Menu model.Menu
 	var SysRole model.SysRole
 	id, err := strconv.Atoi(c.Param("roleId"))

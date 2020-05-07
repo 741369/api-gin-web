@@ -307,6 +307,145 @@ paths:
       summary: 分页列表数据 / page list data
       tags:
       - 工具 / system
+  /api/v1/dept:
+    post:
+      consumes:
+      - application/json
+      description: 获取JSON
+      parameters:
+      - description: data
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Dept'
+      responses:
+        "200":
+          description: '{"code": -1, "message": "添加失败"}'
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: 添加部门
+      tags:
+      - 部门 / dept
+    put:
+      consumes:
+      - application/json
+      description: 获取JSON
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: body
+        in: body
+        name: data
+        required: true
+        schema:
+          $ref: '#/definitions/model.Dept'
+      responses:
+        "200":
+          description: '{"code": -1, "message": "添加失败"}'
+          schema:
+            type: string
+      security:
+      - Bearer: []
+      summary: 修改部门
+      tags:
+      - 部门 / dept
+  /api/v1/dept/{deptId}:
+    get:
+      description: 获取JSON
+      parameters:
+      - description: deptId
+        in: path
+        name: deptId
+        type: string
+      - description: position
+        in: query
+        name: position
+        type: string
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            $ref: '#/definitions/controller.Response'
+      security:
+      - "": []
+      summary: 部门列表数据
+      tags:
+      - 部门 / dept
+  /api/v1/dept/{id}:
+    delete:
+      description: 删除数据
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "200":
+          description: '{"code": -1, "message": "删除失败"}'
+          schema:
+            type: string
+      summary: 删除部门
+      tags:
+      - 部门 / dept
+  /api/v1/dept/list:
+    get:
+      description: 分页列表
+      parameters:
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: position
+        in: query
+        name: position
+        type: string
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            $ref: '#/definitions/controller.Response'
+      security:
+      - "": []
+      summary: 分页部门列表数据
+      tags:
+      - 部门 / dept
+  /api/v1/dept/tree:
+    get:
+      description: 分页列表
+      parameters:
+      - description: name
+        in: query
+        name: name
+        type: string
+      - description: id
+        in: query
+        name: id
+        type: string
+      - description: position
+        in: query
+        name: position
+        type: string
+      responses:
+        "200":
+          description: '{"code": 200, "data": [...]}'
+          schema:
+            $ref: '#/definitions/controller.Response'
+      security:
+      - "": []
+      summary: 分页部门列表数据
+      tags:
+      - 部门 / dept
   /api/v1/dict/data:
     post:
       consumes:
@@ -646,7 +785,7 @@ paths:
       - Bearer: []
       summary: 添加表结构
       tags:
-      - 工具 - 生成表
+      - 工具 / system
     put:
       consumes:
       - application/json
@@ -667,7 +806,7 @@ paths:
       - Bearer: []
       summary: 修改表结构
       tags:
-      - 工具 - 生成表
+      - 工具 / system
   /api/v1/sys/tables/info/{tableId}:
     delete:
       description: 删除表结构
@@ -684,7 +823,7 @@ paths:
             type: string
       summary: 删除表结构
       tags:
-      - 工具 - 生成表
+      - 工具 / system
     get:
       description: 获取JSON
       parameters:
@@ -702,7 +841,7 @@ paths:
       - "": []
       summary: 获取配置
       tags:
-      - 工具 - 生成表
+      - 工具 / system
   /api/v1/sys/tables/page:
     get:
       description: 生成表分页列表
@@ -726,7 +865,7 @@ paths:
             $ref: '#/definitions/controller.Response'
       summary: 分页列表数据
       tags:
-      - 工具 - 生成表
+      - 工具 / system
   /api/v1/sysuser:
     post:
       consumes:
@@ -819,16 +958,18 @@ paths:
   /sd/health:
     get:
       consumes:
-      - text/html
-      description: 健康状况
+      - application/json
+      description: Shows OK as the ping-pong result
       produces:
-      - text/html
+      - application/json
       responses:
         "200":
           description: OK
           schema:
             type: string
-      summary: 健康状况 HealthCheck shows OK as the ping-pong result.
+      summary: Shows OK as the ping-pong result
+      tags:
+      - sd
   /sd/os:
     get:
       consumes:

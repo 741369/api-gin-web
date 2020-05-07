@@ -133,6 +133,229 @@
                 }
             }
         },
+        "/api/v1/dept": {
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "获取JSON",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部门 / dept"
+                ],
+                "summary": "修改部门",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "body",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Dept"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": -1, \"message\": \"添加失败\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "description": "获取JSON",
+                "consumes": [
+                    "application/json"
+                ],
+                "tags": [
+                    "部门 / dept"
+                ],
+                "summary": "添加部门",
+                "parameters": [
+                    {
+                        "description": "data",
+                        "name": "data",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/model.Dept"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": -1, \"message\": \"添加失败\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/dept/list": {
+            "get": {
+                "security": [
+                    {
+                        "": []
+                    }
+                ],
+                "description": "分页列表",
+                "tags": [
+                    "部门 / dept"
+                ],
+                "summary": "分页部门列表数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "position",
+                        "name": "position",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/dept/tree": {
+            "get": {
+                "security": [
+                    {
+                        "": []
+                    }
+                ],
+                "description": "分页列表",
+                "tags": [
+                    "部门 / dept"
+                ],
+                "summary": "分页部门列表数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "name",
+                        "name": "name",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "id",
+                        "name": "id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "position",
+                        "name": "position",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/dept/{deptId}": {
+            "get": {
+                "security": [
+                    {
+                        "": []
+                    }
+                ],
+                "description": "获取JSON",
+                "tags": [
+                    "部门 / dept"
+                ],
+                "summary": "部门列表数据",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "deptId",
+                        "name": "deptId",
+                        "in": "path"
+                    },
+                    {
+                        "type": "string",
+                        "description": "position",
+                        "name": "position",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": 200, \"data\": [...]}",
+                        "schema": {
+                            "$ref": "#/definitions/controller.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/dept/{id}": {
+            "delete": {
+                "description": "删除数据",
+                "tags": [
+                    "部门 / dept"
+                ],
+                "summary": "删除部门",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{\"code\": -1, \"message\": \"删除失败\"}",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/dict/data": {
             "put": {
                 "security": [
@@ -655,7 +878,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "工具 - 生成表"
+                    "工具 / system"
                 ],
                 "summary": "修改表结构",
                 "parameters": [
@@ -689,7 +912,7 @@
                     "application/json"
                 ],
                 "tags": [
-                    "工具 - 生成表"
+                    "工具 / system"
                 ],
                 "summary": "添加表结构",
                 "parameters": [
@@ -719,7 +942,7 @@
                 ],
                 "description": "获取JSON",
                 "tags": [
-                    "工具 - 生成表"
+                    "工具 / system"
                 ],
                 "summary": "获取配置",
                 "parameters": [
@@ -743,7 +966,7 @@
             "delete": {
                 "description": "删除表结构",
                 "tags": [
-                    "工具 - 生成表"
+                    "工具 / system"
                 ],
                 "summary": "删除表结构",
                 "parameters": [
@@ -769,7 +992,7 @@
             "get": {
                 "description": "生成表分页列表",
                 "tags": [
-                    "工具 - 生成表"
+                    "工具 / system"
                 ],
                 "summary": "分页列表数据",
                 "parameters": [
@@ -940,14 +1163,17 @@
         },
         "/sd/health": {
             "get": {
-                "description": "健康状况",
+                "description": "Shows OK as the ping-pong result",
                 "consumes": [
-                    "text/html"
+                    "application/json"
                 ],
                 "produces": [
-                    "text/html"
+                    "application/json"
                 ],
-                "summary": "健康状况 HealthCheck shows OK as the ping-pong result.",
+                "tags": [
+                    "sd"
+                ],
+                "summary": "Shows OK as the ping-pong result",
                 "responses": {
                     "200": {
                         "description": "OK",
