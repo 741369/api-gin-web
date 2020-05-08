@@ -1163,17 +1163,14 @@
         },
         "/sd/health": {
             "get": {
-                "description": "Shows OK as the ping-pong result",
+                "description": "健康状况",
                 "consumes": [
-                    "application/json"
+                    "text/html"
                 ],
                 "produces": [
-                    "application/json"
+                    "text/html"
                 ],
-                "tags": [
-                    "sd"
-                ],
-                "summary": "Shows OK as the ping-pong result",
+                "summary": "健康状况 HealthCheck shows OK as the ping-pong result.",
                 "responses": {
                     "200": {
                         "description": "OK",
